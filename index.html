@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Horas Trabalhadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: url("https://cdn.discordapp.com/icons/1156379088668336158/f58464cd69400cf93f4560e2efd56dd5.webp?size=1024&width=0&height=256") no-repeat center center fixed;
+            background-size: contain;
+            background-color: rgb(0, 0, 0);
+            color: #f55e06;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            background: rgba(211, 4, 4, 0);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(228, 5, 5, 0);
+        }
+
+        h1 {
+            color: #f55e06;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: calc(50% - 10px);
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #fa060600;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0);
+            color: #fcfcfc;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            color: #f55e06;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Horas Trabalhadas</h1>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada1">Entrada 1 :</label>
+                <input type="text" id="manualEntrada1" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida1">Saída 1 :</label>
+                <input type="text" id="manualSaida1" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada2">Entrada 2 :</label>
+                <input type="text" id="manualEntrada2" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida2">Saída 2 :</label>
+                <input type="text" id="manualSaida2" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada3">Entrada 3 :</label>
+                <input type="text" id="manualEntrada3" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida3">Saída 3 :</label>
+                <input type="text" id="manualSaida3" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada4">Entrada 4 :</label>
+                <input type="text" id="manualEntrada4" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida4">Saída 4 :</label>
+                <input type="text" id="manualSaida4" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada5">Entrada 5 :</label>
+                <input type="text" id="manualEntrada5" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida5">Saída 5 :</label>
+                <input type="text" id="manualSaida5" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div>
+                <label for="manualEntrada6">Entrada 6 :</label>
+                <input type="text" id="manualEntrada6" placeholder="hhmm">
+            </div>
+            <div>
+                <label for="manualSaida6">Saída 6 :</label>
+                <input type="text" id="manualSaida6" placeholder="hhmm">
+            </div>
+        </div>
+
+        <div>
+            <button onclick="calcularHoras()">Calcular</button>
+            <button onclick="limparCampos()">Limpar</button>
+        </div>
+
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function formatarHora(hora) {
+            hora = hora.replace(/\D/g, ''); // Remove caracteres não numéricos
+            if (hora.length > 2) {
+                hora = hora.substring(0, 2) + ':' + hora.substring(2, 4);
+            }
+            return hora;
+        }
+
+        function calcularHoras() {
+            var horasTrabalhadas = 0;
+            var minutosTrabalhados = 0;
+
+            for (var i = 1; i <= 6; i++) {
+                var horaEntrada = formatarHora(document.getElementById("manualEntrada" + i).value);
+                var horaSaida = formatarHora(document.getElementById("manualSaida" + i).value);
+
+                if (horaEntrada && horaSaida) {
+                    var entrada = new Date("2022-01-01 " + horaEntrada);
+                    var saida = new Date("2022-01-01 " + horaSaida);
+
+                    var tempoTrabalhado = Math.abs(saida - entrada) / 1000; // tempo em segundos
+
+                    horasTrabalhadas += Math.floor(tempoTrabalhado / 3600);
+                    minutosTrabalhados += Math.floor((tempoTrabalhado % 3600) / 60);
+                }
+            }
+
+            var resultadoHoras = horasTrabalhadas > 0 ? horasTrabalhadas + " horas" : "";
+            var resultadoMinutos = minutosTrabalhados > 0 ? minutosTrabalhados + " minutos" : "";
+
+            var resultadoFinal = resultadoHoras;
+
+            if (resultadoHoras !== "" && resultadoMinutos !== "") {
+                resultadoFinal += " e " + resultadoMinutos;
+            } else {
+                resultadoFinal = resultadoMinutos;
+            }
+
+            document.getElementById("resultado").innerHTML = "Horas trabalhadas: " + resultadoFinal + ".";
+        }
+
+        function limparCampos() {
+            for (var i = 1; i <= 6; i++) {
+                document.getElementById("manualEntrada" + i).value = "";
+                document.getElementById("manualSaida" + i).value = "";
+            }
+
+            document.getElementById("resultado").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
